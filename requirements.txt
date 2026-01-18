@@ -7,7 +7,7 @@ colorama
 distro
 dj-database-url
 Django
-docx2pdf
+
 google-auth
 google-genai
 gunicorn

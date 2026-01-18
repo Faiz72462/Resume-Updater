@@ -3,7 +3,7 @@ from google import genai
 import ast
 import re
 from docx import Document
-from docx2pdf import convert
+
 import json
 import datetime
 import os
@@ -262,6 +262,8 @@ def resume_updator(summary, skills, experience, country, output_path):
     doc.save(output_path)
 
 def pdf_generotor(input_path, output_path):
-    convert(input_path, output_path)
+    # PDF generation disabled due to Render limitations (requires LibreOffice)
+    # convert(input_path, output_path)
+    pass
 
 

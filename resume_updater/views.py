@@ -41,11 +41,11 @@ def generate_resume(request):
                     # 3. Update the DOCX
                     resume_updator(summary, skills, experience, country, docx_filename)
 
-                    # 4. Convert to PDF
-                    pdf_generotor(docx_filename, pdf_filename)
+                    # 4. Convert to PDF (Disabled)
+                    # pdf_generotor(docx_filename, pdf_filename)
 
-                    # 5. Save to Database
-                    if os.path.exists(pdf_filename):
+                    # 5. Save to Database (Saving DOCX instead of PDF)
+                    if os.path.exists(docx_filename):
                         # Create DB Entry
                         job_app = JobApplication(
                             company=company,
@@ -54,13 +54,13 @@ def generate_resume(request):
                             resume_data=parsed_output
                         )
                         # Open the file and save it to the model
-                        with open(pdf_filename, 'rb') as f:
-                            job_app.resume_pdf.save(f"resume_{company}_{country}.pdf", File(f))
+                        with open(docx_filename, 'rb') as f:
+                            job_app.resume_pdf.save(f"resume_{company}_{country}.docx", File(f))
                         job_app.save()
 
                         return redirect(f'/?new_id={job_app.id}')
                     else:
-                        return render(request, "home.html", {"form": form, "apps": apps, "error": "PDF file was not generated."})
+                        return render(request, "home.html", {"form": form, "apps": apps, "error": "Resume file was not generated."})
                 
                 finally:
                     # Cleanup: Delete temporary files
@@ -80,4 +80,4 @@ def generate_resume(request):
 @login_required
 def download_resume(request, app_id):
     app = get_object_or_404(JobApplication, id=app_id)
-    return FileResponse(app.resume_pdf.open(), as_attachment=True, filename=f"Resume_{app.company}.pdf")
+    return FileResponse(app.resume_pdf.open(), as_attachment=True, filename=f"Resume_{app.company}.docx")
