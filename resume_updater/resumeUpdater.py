@@ -8,12 +8,12 @@ import json
 import datetime
 import os
 
-client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
+client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"), http_options={'timeout': 60})
 
 def genrator(client,jd):
 
     response = client.models.generate_content(
-        model="gemini-3-flash-preview",
+        model="gemini-1.5-flash",
         contents=f"""Prompt:
 
     You are a senior resume writer and ATS optimization expert.
