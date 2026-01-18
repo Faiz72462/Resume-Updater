@@ -24,7 +24,6 @@ pydantic
 pydantic_core
 python-docx
 python-dotenv
-pywin32
 requests
 rsa
 sniffio
